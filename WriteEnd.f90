@@ -1,0 +1,36 @@
+!THIS SUBROUTINE WRITES THE FINAL OUTPUT FILES AND CLOSES ALL FILES AT THE END OF THE RUN.
+!THIS SUBROUTINE IS WRITTEN BY KALITH M ISMAIL, NOVEMBER-2022, NUS SINGAPORE.
+
+    SUBROUTINE WriteEnd()
+        INCLUDE 'common.h'
+
+!       Write output coordinate file
+        REWIND 13
+        WRITE(13,*) NAN,TIME
+        WRITE(13,*) XL,YL,ZL,XCENTR,YCENTR,ZCENTR
+        WRITE(13,*) (KTYPE(J),J=1,NAN)
+        WRITE(13,*) (KHIST(J),XD(1,J),XD(2,J),XD(3,J),J=1,NAN)
+        WRITE(13,*) (Q1D(1,J),Q1D(2,J),Q1D(3,J),J=1,NAN)
+        WRITE(13,*) (RAD(J),ZMASS(J),J=1,NAN)
+        WRITE(13,*) (SK(J),SN(J),TS(J),VS(J),J=1,NAN)
+
+!        REWIND 15
+!        WRITE(15,*) (FD)
+!        WRITE(15,*) (Q1)
+
+        REWIND 15
+        WRITE(15,505) (XD(1,J),XD(2,J),XD(3,J),RAD(J),KTYPE(J),J=1,NAN)
+505     FORMAT(4(F10.4,1x),I2)
+
+!       CLOSING OPEN FILES
+        CLOSE (UNIT=10)
+        CLOSE (UNIT=11)
+        CLOSE (UNIT=12)
+        CLOSE (UNIT=13)
+        CLOSE (UNIT=14)
+        CLOSE (UNIT=15)
+        CLOSE (UNIT=16)
+        CLOSE (UNIT=100)
+
+        RETURN
+    END SUBROUTINE WriteEnd

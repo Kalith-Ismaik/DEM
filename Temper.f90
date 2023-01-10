@@ -1,0 +1,26 @@
+!THIS SUBROUTINE IS WRITTEN TO AVERAGE THE TEMPERATURE AND ENERGY OF THE SYSTEM.
+!THIS SUBROUTINE IS WRITTEN BY KALITH M ISMAIL, NOVEMBER-2022, NUS SINGAPORE.
+
+    SUBROUTINE TEMPER(ENT,QINT,POTT,TEMPTR,TEMPST)
+
+        INCLUDE 'common.h'
+        
+        POTT=0.0d0
+        QINT=0.0d0                         
+        ent_loop: DO I=1,NAN    
+           POTT=POTT+POT(I)
+           QINT=QINT+QIN(I)
+        END DO ent_loop
+        
+        ENT=QINT+POTT
+        IF(KBOUND.EQ.0.OR.NRIGID.EQ.0) Then
+           TEMPTR=QINT*2.0d0/BK/NDIM/DBLE(NAN)
+        ElseIF (NRIGID.GE.NAN) Then
+           TEMPTR=0.0d0
+        Else
+           TEMPTR=QINT*2.0d0/BK/NDIM/DBLE(NAN-NRIGID)
+        END IF
+    
+        RETURN
+   
+    END SUBROUTINE TEMPER
